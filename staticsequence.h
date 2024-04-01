@@ -52,8 +52,9 @@ StaticSequence<key>::StaticSequence(int size, int mode) {
   } else if (mode == 1) { // Inicializa la secuencia con números aleatorios
     size_ = size;
     data_ = new key[size_];
+    key* clave_aleatoria;
     for (unsigned i = 0; i < size_; i++) {
-      key* clave_aleatoria = new key();
+      clave_aleatoria = new key();
       data_[i] = *clave_aleatoria;
     }
   } else {
