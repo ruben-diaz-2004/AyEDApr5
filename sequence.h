@@ -14,11 +14,11 @@
 #define SEQUENCE_H
 
 
-#include <iostream>
 
 template <class key>
 class Sequence {
   public:
+  virtual key operator[](const int& pos) const = 0;
   virtual bool Search(const key& k) const = 0;
   virtual bool Insert(const key& k) = 0;
   virtual void Print() const = 0;

@@ -62,33 +62,45 @@ void Nif::operator=(int num) {
 }
 
 
+/**
+ * Operador de comparación
+ * @param nif NIF a comparar
+ * @return true si son iguales, false en caso contrario
+ */
+bool Nif::operator==(const Nif& nif) const {
+  return nif_ == nif.nif_;
+  // return nif_ == long(nif);
+}
 
-// Nif::Nif(const long& nif) {
-//   if (nif / 100000000 != 0) {
-//     std::cerr << "NIF no válido" << std::endl;
-//     exit(1);
-//   }
 
-//   nif_ = nif;
-// }
+/**
+ * Operador de comparación
+ * @param nif NIF a comparar
+ * @return true si son distintos, false en caso contrario
+ */
+bool Nif::operator!=(const Nif& nif) const {
+  return nif_ != nif.nif_;
+}
 
 
-// bool Nif::operator>(const Nif& nif) const {
-//   return nif_ > long(nif);
-// }
+/**
+ * Operador de comparación
+ * @param nif NIF a comparar
+ * @return true si es menor, false en caso contrario
+ */
+bool Nif::operator<(const Nif& nif) const {
+  return nif_ < nif.nif_;
+}
 
-// bool Nif::operator<(const Nif& nif) const {
-//   return nif_ < long(nif);
-// }
 
-// bool Nif::operator==(const Nif& nif) const {
-//   return nif_ == long(nif);
-// }
-
-// bool Nif::operator!=(const Nif& nif) const {
-//   return nif_ != long(nif);
-// }
-
+/**
+ * Operador de comparación
+ * @param nif NIF a comparar
+ * @return true si es mayor, false en caso contrario
+ */
+bool Nif::operator>(const Nif& nif) const {
+  return nif_ > nif.nif_;
+}
 
 /**
  * Conversión implícita a long

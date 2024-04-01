@@ -12,15 +12,12 @@
 #include <iostream>
 #include <fstream>
 #include "parameters.cc"
-#include "dispersionfunction.h"
-#include "dispersiontypes.h"
-#include "explorationfunction.h"
-#include "explorationtypes.h"
+#include "sortfunction.cc"
 #include "sequence.h"
-#include "dynamicsequence.h"
 #include "staticsequence.h"
-#include "hashtable.h"
 #include "nif.h"
+#include "sortmethod.h"
+#include "methods.h"
 
 #include <iostream>
 #include <sstream>
@@ -32,80 +29,55 @@ int main(int argc, char *argv[]) {
 
   std::cout << "Options menu:" << std::endl << "'i' to insert key.\n'r' to insert random key\n's' to search key.\n'x' to exit.\n";
 
-  DispersionFunction<Nif>* dispersion;
-  switch(options.fd_code) {
+
+  Sequence<Nif>* sequencia_a_ordenar;
+  switch (options.init_code) {
     case 0:
-      dispersion = new ModuleDispersion<Nif>(options.tablesize);
+      sequencia_a_ordenar = new StaticSequence<Nif>(options.size, options.init_code); // Manual
       break;
     case 1:
-      dispersion = new SumDispersion<Nif>(options.tablesize);
+      sequencia_a_ordenar = new StaticSequence<Nif>(options.size, options.init_code); // Random
       break;
     case 2:
-      dispersion = new PseudoRandomDispersion<Nif>(options.tablesize);
+      std::fstream file(options.file_name);
+      // sequencia_a_ordenar = new StaticSequence<Nif>(options.size, file); // File
       break;
-    default:
-      std::cerr << "Error: unknown dispersion function." << std::endl;
-      exit(EXIT_SUCCESS);
   }
 
 
-  ExplorationFunction<Nif>* exploration;
-  if (options.close_dispersion) {
-    switch(options.exploration_code) {
-      case 0:
-        exploration = new LinearExploration<Nif>();
-        break;
-      case 1:
-        exploration = new QuadraticExploration<Nif>();
-        break;
-      case 2:
-        exploration = new DoubleDispersion<Nif>(*dispersion);
-        break;
-      case 3:
-        exploration = new ReDispersion<Nif>(options.tablesize);
-        break;
-      default:
-        std::cerr << "Error: unknown exploration function." << std::endl;
-        exit(EXIT_SUCCESS);
-    }
+  SortMethod<Nif>* metodo_ordenacion;
+  switch (options.sort_code) {
+    case 0:
+      metodo_ordenacion = new SelectionSort<Nif>(*sequencia_a_ordenar, options.size);
+      break;
+    case 1:
+      // metodo_ordenacion = new QuickSort<Nif>();
+      break;
+    case 2:
+      // metodo_ordenacion = new HeapSort<Nif>();
+      break;
+    case 3:
+      // metodo_ordenacion = new ShellSort<Nif>();
+      break;
+    case 4:
+      // metodo_ordenacion = new RadixSort<Nif>();
+      break;
   }
 
-  Sequence<Nif>* hash_table;
-  if (options.close_dispersion) {
-    hash_table = new HashTable<Nif, StaticSequence<Nif>>(options.tablesize, *dispersion, *exploration, options.blocksize);
-  } else {
-    hash_table = new HashTable<Nif, DynamicSequence<Nif>>(options.tablesize, *dispersion);
-  }
-
-  
+  sequencia_a_ordenar->Print();
+  metodo_ordenacion->Sort();
+  sequencia_a_ordenar->Print();
 
   bool running = true;
   char stop;
   long clave;
   while(running) {
-    hash_table->Print();
     std::cin >> stop;
     switch(stop) {
-      case 'i':
-        std::cin >> clave;
-        if (hash_table->Insert(clave)) {
-          std::cout << "Key inserted." << std::endl;
-        } else {
-          std::cout << "Key not inserted." << std::endl;
-        }
-        break;
-      case 'r': // insert random
-          hash_table->Insert(Nif());
-        break;
-      case 's':
-        std::cin >> clave;
-        if (hash_table->Search(Nif(clave))) {
-          std::cout << "Key found." << std::endl;
-        } else {
-          std::cout << "Key not found." << std::endl;
-        }
-        break;
       case 'x':
+        running = false;
+        break;
+      default:
         running = false;
         break;
     }

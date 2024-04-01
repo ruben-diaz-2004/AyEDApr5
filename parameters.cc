@@ -16,58 +16,50 @@
 
 
 struct parameters {
-  int tablesize;
-  int fd_code;  // 0: mod, 1: suma, 2: pseudoaleatorio
-  int dispersion_technique; // 0: close, 1: open
-  bool close_dispersion = false;
-  int blocksize;
-  int exploration_code; // 0: linear, 1: quadratic, 2: double, 3: rehashing
+  int size;
+  int sort_code;
+  int init_code;
+  bool print_trace = false;
+  std::string file_name;
 };
 
 parameters parse_args(int argc, char* argv[]) {
   std::vector<std::string> args(argv + 1, argv + argc);
   parameters options;
   for (auto it = args.begin(), end = args.end(); it != end; ++it) {
-    if (*it == "-ts") {
-      options.tablesize = std::stoi(*++it);
-    }
-    else if (*it == "-fd") {
-      if (*++it == "mod") {
-        options.fd_code = 0;
-      } else if (*it == "suma") {
-        options.fd_code = 1;
-      } else if (*it == "pseudoaleatorio") {
-        options.fd_code = 2;
+    if (*it == "-size") {
+      options.size = std::stoi(*++it);
+    } else if (*it == "-ord") {
+      if (*++it == "sel") {
+        options.sort_code = 0;
+      } else if (*it == "quick") {
+        options.sort_code = 1;
+      } else if (*it == "heap") {
+        options.sort_code = 2;
+      } else if (*it == "shell") {
+        options.sort_code = 3;
+      } else if (*it == "radix") {
+        options.sort_code = 4;
       }
-    }
-    else if (*it == "-hash") {
-      if (*++it == "close") {
-        options.dispersion_technique = 0;
-        options.close_dispersion = true;
-      } else if (*it == "open") {
-        options.dispersion_technique = 1;
+    } else if (*it == "-init") {
+      *++it;
+      if (*it == "manual") {
+        options.init_code = 0;
+      } else if (*it == "random") {
+        options.init_code = 1;
+      } else if (*it == "file") {
+        options.init_code = 2;
+        *++it;
+        options.file_name = *it;
       }
-    }
-    else if (*it == "-bs") {
-      if (options.close_dispersion == false) {
-        std::cerr << "Error: no se puede especificar el tamaño de bloque si la técnica de dispersión no es cerrada" << std::endl;
-        exit(EXIT_SUCCESS);
-      }
-      options.blocksize = std::stoi(*++it);
-    }
-    else if (*it == "-fe") {
-      if (*++it == "linear") {
-        options.exploration_code = 0;
-      } else if (*it == "quadratic") {
-        options.exploration_code = 1;
-      } else if (*it == "double") {
-        options.exploration_code = 2;
-      } else if (*it == "rehashing") {
-        options.exploration_code = 3;
+    } else if (*it == "-trace") {
+      if (*++it == "y") {
+        options.print_trace = true;
       }
     }
     else {
-      std::cerr << "Error: argumento no válido" << std::endl;
+      std::cerr << "Error: invalid argument " << *it << std::endl;
+      exit(1);
     }
   }
   return options;

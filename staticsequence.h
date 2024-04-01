@@ -16,16 +16,17 @@
 
 #include <iostream>
 #include "sequence.h"
-
+#include <fstream>
 
 template <class key>
 class StaticSequence : public Sequence<key> {
  public:
-  StaticSequence();
+  StaticSequence(int size, int mode);
+  StaticSequence(int size, const std::fstream& filename);
   ~StaticSequence();
+  key operator[](const int& pos) const { return data_[pos]; }
   bool Search(const key& k) const override;
   bool Insert(const key& k) override;
-  void Initialize(int size);
   void Print() const;
   bool IsFull() const; 
 
@@ -39,26 +40,41 @@ class StaticSequence : public Sequence<key> {
  * @brief Constructor de la clase StaticSequence
 */
 template <class key>
-StaticSequence<key>::StaticSequence() {
-  size_ = 0;
-  data_ = nullptr;
+StaticSequence<key>::StaticSequence(int size, int mode) {
+  long clave_a_introducir;
+  if (mode == 0) { // Inicializa la secuencia manualmente
+    size_ = size;
+    data_ = new key[size_];
+    for (unsigned i = 0; i < size_; i++) {
+      std::cin >> clave_a_introducir;
+      data_[i] = clave_a_introducir;
+    }
+  } else if (mode == 1) { // Inicializa la secuencia con números aleatorios
+    size_ = size;
+    data_ = new key[size_];
+    for (unsigned i = 0; i < size_; i++) {
+      key* clave_aleatoria = new key();
+      data_[i] = *clave_aleatoria;
+    }
+  } else {
+    std::cerr << "Error: modo no válido" << std::endl; 
+  } 
 }
 
 
 /**
- * @brief Inicializa la secuencia
- * @param size Tamaño de la secuencia
+ * @brief Constructor de la clase StaticSequence
 */
 template <class key>
-void StaticSequence<key>::Initialize(int size) {
-  long value = 0;
+StaticSequence<key>::StaticSequence(int size, const std::fstream& filename) {
   size_ = size;
   data_ = new key[size_];
   for (unsigned i = 0; i < size_; i++) {
-    data_[i] = value;
+    key clave_a_introducir;
+    filename >> clave_a_introducir;
+    data_[i] = clave_a_introducir;
   }
 }
-
 
 /**
  * @brief Destructor de la clase StaticSequence

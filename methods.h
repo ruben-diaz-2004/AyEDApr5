@@ -14,21 +14,21 @@
 #define METHODS_H
 
 #include <iostream>
+#include "nif.h"
 #include "staticsequence.h"
-#include "sortfunction.h"
-#include "sortmethod.h"
+
 
 
 template <class key>
 class SelectionSort : public SortMethod<key> {
  public:
-  SelectionSort(StaticSequence<key> sequence, int size) : sequence_(sequence), size_(size) {}
+  SelectionSort(Sequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
   void Sort() const override {
-    SelectionSort(sequence_, size_);
+    SelectionSortFunction(sequence_, size_);
   }
 
  private:
-  StaticSequence<key> sequence_;
+  Sequence<key>& sequence_;
   int size_;
 };
 
