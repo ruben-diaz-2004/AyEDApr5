@@ -12,13 +12,13 @@ CXXFLAGS = -std=c++17 -g
 
 
 
-all: TablaHash
+all: sort
 
-TablaHash: main_hash_table.cc nif.cc
+sort: main_hash_table.cc nif.cc sortfunction.cc
 		$(CXX) $(CXXFLAGS) -o $@ $^
 	
 
 	
 .PHONY: all clean
 clean:
-		rm -f TablaHash
+		rm -f sort

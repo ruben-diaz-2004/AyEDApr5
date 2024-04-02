@@ -28,9 +28,12 @@ void SelectionSortFunction(StaticSequence<key>& sequence, int size) {
         min_index = j;
       }
     }
-    Nif aux = sequence[min_index];
-    sequence[min_index] = sequence[i];
-    sequence[i] = aux;
+    key aux = sequence[min_index];
+    // sequence[min_index] = sequence[i];
+    // sequence[i] = aux;
+    sequence.data(min_index, sequence[i]);
+    sequence.data(i, aux);
+    sequence.Print();
   }
 }
 

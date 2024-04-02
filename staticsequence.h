@@ -30,6 +30,7 @@ class StaticSequence : public Sequence<key> {
   bool Insert(const key& k) override;
   void Print() const;
   bool IsFull() const; 
+  void data(int i, key k) { data_[i] = k; } // Setter de data_
 
   private:
   unsigned size_;
