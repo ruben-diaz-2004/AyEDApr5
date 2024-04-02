@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
       break;
     case 2:
       std::fstream file(options.file_name);
-      // sequencia_a_ordenar = new StaticSequence<Nif>(options.size, file); // File
+      sequencia_a_ordenar = new StaticSequence<Nif>(options.size, file); // File
       break;
   }
 

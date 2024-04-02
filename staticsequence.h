@@ -17,12 +17,13 @@
 #include <iostream>
 #include "sequence.h"
 #include <fstream>
+#include <ctime>
 
 template <class key>
 class StaticSequence : public Sequence<key> {
  public:
   StaticSequence(int size, int mode);
-  StaticSequence(int size, const std::fstream& filename);
+  StaticSequence(int size, std::fstream& filename);
   ~StaticSequence();
   key operator[](const int& pos) const { return data_[pos]; }
   bool Search(const key& k) const override;
@@ -41,20 +42,24 @@ class StaticSequence : public Sequence<key> {
 */
 template <class key>
 StaticSequence<key>::StaticSequence(int size, int mode) {
-  long clave_a_introducir;
+  long clave;
   if (mode == 0) { // Inicializa la secuencia manualmente
     size_ = size;
     data_ = new key[size_];
+    key* clave_a_introducir;
     for (unsigned i = 0; i < size_; i++) {
-      std::cin >> clave_a_introducir;
-      data_[i] = clave_a_introducir;
+      std::cin >> clave;
+      clave_a_introducir = new key(clave);
+      data_[i] = *clave_a_introducir;
     }
   } else if (mode == 1) { // Inicializa la secuencia con números aleatorios
     size_ = size;
     data_ = new key[size_];
     key* clave_aleatoria;
+    srand(time(NULL));
     for (unsigned i = 0; i < size_; i++) {
-      clave_aleatoria = new key();
+      clave = rand();
+      clave_aleatoria = new key(clave);
       data_[i] = *clave_aleatoria;
     }
   } else {
@@ -67,13 +72,15 @@ StaticSequence<key>::StaticSequence(int size, int mode) {
  * @brief Constructor de la clase StaticSequence
 */
 template <class key>
-StaticSequence<key>::StaticSequence(int size, const std::fstream& filename) {
+StaticSequence<key>::StaticSequence(int size, std::fstream& filename) {
   size_ = size;
   data_ = new key[size_];
+  long clave;
+  key* clave_a_introducir;
   for (unsigned i = 0; i < size_; i++) {
-    key clave_a_introducir;
-    filename >> clave_a_introducir;
-    data_[i] = clave_a_introducir;
+    filename >> clave;
+    clave_a_introducir = new key(clave);
+    data_[i] = *clave_a_introducir;
   }
 }
 

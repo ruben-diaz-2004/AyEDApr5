@@ -49,17 +49,27 @@ Nif::Nif(const long& nif) {
  * Operador de asignación
  * @param num Valor del NIF
  */
-void Nif::operator=(int num) {
-  if (num / 100000000 != 0) {
-    while (num / 100000000 == 0) {
-      num *= 10;
-    }
-    while (num % 100000000 != num) {
-      num /= 10;
-  }
-  }
-  nif_ = num;
+// void Nif::operator=(int num) {
+//   if (num / 100000000 != 0) {
+//     while (num / 100000000 == 0) {
+//       num *= 10;
+//     }
+//     while (num % 100000000 != num) {
+//       num /= 10;
+//   }
+//   }
+//   nif_ = num;
+// }
+
+
+/**
+ * Operador de asignación
+ * 
+*/
+void Nif::operator=(const Nif& nif) {
+  nif_ = long(nif);
 }
+
 
 
 /**

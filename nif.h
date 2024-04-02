@@ -23,8 +23,10 @@ class Nif {
   Nif(const long& nif);
 
   // Operador de comparación
-  void operator=(int num);
+  void operator=(const Nif& nif);
+  // void operator=(int num);
 
+  
   // Operadores de comparación
   bool operator==(const Nif& nif) const;
   bool operator!=(const Nif& nif) const;
