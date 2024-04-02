@@ -19,7 +19,8 @@
 template <class key>
 class SortMethod {
  public:
-  virtual void Sort() const = 0;
+  virtual void Sort() = 0;
+  virtual void Print() const = 0;
 };
 
 

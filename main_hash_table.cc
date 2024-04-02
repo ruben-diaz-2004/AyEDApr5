@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   std::cout << "Options menu:" << std::endl << "'i' to insert key.\n'r' to insert random key\n's' to search key.\n'x' to exit.\n";
 
 
-  Sequence<Nif>* sequencia_a_ordenar;
+  StaticSequence<Nif>* sequencia_a_ordenar;
   switch (options.init_code) {
     case 0:
       sequencia_a_ordenar = new StaticSequence<Nif>(options.size, options.init_code); // Manual
@@ -64,9 +64,9 @@ int main(int argc, char *argv[]) {
       break;
   }
 
-  sequencia_a_ordenar->Print();
+  metodo_ordenacion->Print();
   metodo_ordenacion->Sort();
-  sequencia_a_ordenar->Print();
+  metodo_ordenacion->Print();
 
   bool running = true;
   char stop;

@@ -22,13 +22,15 @@
 template <class key>
 class SelectionSort : public SortMethod<key> {
  public:
-  SelectionSort(Sequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
-  void Sort() const override {
+  SelectionSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  void Sort() override {
     SelectionSortFunction(sequence_, size_);
   }
-
+  void Print() const {
+    sequence_.Print();
+  }
  private:
-  Sequence<key>& sequence_;
+  StaticSequence<key> sequence_;
   int size_;
 };
 
