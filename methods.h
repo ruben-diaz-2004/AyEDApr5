@@ -38,9 +38,12 @@ class SelectionSort : public SortMethod<key> {
 template <class key>
 class QuickSort : public SortMethod<key> {
  public:
-  QuickSort(StaticSequence<key> sequence, int size) : sequence_(sequence), size_(size) {}
-  void Sort() const override {
-    QuickSort(sequence_, size_);
+  QuickSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  void Sort() override {
+    QuickSortFunction(sequence_, 0, size_-1);
+  }
+  void Print() const {
+    sequence_.Print();
   }
 
  private:
@@ -52,9 +55,12 @@ class QuickSort : public SortMethod<key> {
 template <class key>
 class HeapSort : public SortMethod<key> {
  public:
-  HeapSort(StaticSequence<key> sequence, int size) : sequence_(sequence), size_(size) {}
-  void Sort() const override {
+  HeapSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  void Sort() override {
     HeapSort(sequence_, size_);
+  }
+  void Print() const {
+    sequence_.Print();
   }
 
  private:

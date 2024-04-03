@@ -51,10 +51,10 @@ int main(int argc, char *argv[]) {
       metodo_ordenacion = new SelectionSort<Nif>(*sequencia_a_ordenar, options.size);
       break;
     case 1:
-      // metodo_ordenacion = new QuickSort<Nif>();
+      metodo_ordenacion = new QuickSort<Nif>(*sequencia_a_ordenar, options.size);
       break;
     case 2:
-      // metodo_ordenacion = new HeapSort<Nif>();
+      metodo_ordenacion = new HeapSort<Nif>(*sequencia_a_ordenar, options.size);
       break;
     case 3:
       // metodo_ordenacion = new ShellSort<Nif>();
