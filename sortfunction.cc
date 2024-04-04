@@ -18,6 +18,12 @@
 
 // Plantilla de función de ordenación SortFunction<key> (staticsequence<key>, size)
 
+template <class key>
+void Swap(StaticSequence<key>& sequence, int i, int j) {
+  key aux = sequence[i];
+  sequence.data(i, sequence[j]);
+  sequence.data(j, aux);
+}
 
 template <class key>
 void SelectionSortFunction(StaticSequence<key>& sequence, int size) {
@@ -28,11 +34,10 @@ void SelectionSortFunction(StaticSequence<key>& sequence, int size) {
         min_index = j;
       }
     }
-    key aux = sequence[min_index];
-    // sequence[min_index] = sequence[i];
-    // sequence[i] = aux;
-    sequence.data(min_index, sequence[i]);
-    sequence.data(i, aux);
+    // key aux = sequence[min_index];
+    // sequence.data(min_index, sequence[i]);
+    // sequence.data(i, aux);
+    Swap(sequence, min_index, i);
     sequence.Print();
   }
 }
@@ -51,12 +56,14 @@ void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin) {
       --f;
     }
     if (i <= f) {
-      key aux = sequence[i];
-      sequence.data(i, sequence[f]);
-      sequence.data(f, aux);
+      // key aux = sequence[i];
+      // sequence.data(i, sequence[f]);
+      // sequence.data(f, aux);
+      Swap(sequence, i, f);
       ++i;
       --f;
     }
+    sequence.Print();
   }
   if (ini < f) {
     QuickSortFunction(sequence, ini, f);
@@ -84,9 +91,10 @@ void baja(int i, StaticSequence<key>& Sequence, int n) {
     if (Sequence[h] <= Sequence[i]) {
       break;
     } else {
-      key aux = Sequence[i];
-      Sequence.data(i, Sequence[h]);
-      Sequence.data(h, aux);
+      // key aux = Sequence[i];
+      // Sequence.data(i, Sequence[h]);
+      // Sequence.data(h, aux);
+      Swap(Sequence, i, h);
       i = h;
     }
   }
@@ -99,18 +107,37 @@ void HeapSortFunction(StaticSequence<key>& sequence, int n) {
     baja(i, sequence, n);
   }
   for (int i = n; i >= 2; --i) {
-    key aux = sequence[1];
-    sequence.data(1, sequence[i]);
-    sequence.data(i, aux);
+    // key aux = sequence[1];
+    // sequence.data(1, sequence[i]);
+    // sequence.data(i, aux);
+    Swap(sequence, 1, i);
     baja(1, sequence, i-1);
   }
 }
 
 
-// template <class key>
-// void ShellSortFunction(StaticSequence<key> sequence, int size) {
-//   // Implementación de la función de ordenación
-// }
+template <class key>
+void ShellSortFunction(StaticSequence<key>& sequence, int size) {
+  int delta = size;
+  while (delta > 1) {
+    delta = delta / 2;
+    DeltaSort(delta, sequence, size);
+    sequence.Print();
+  }
+}
+
+template <class key>
+void DeltaSort(int delta, StaticSequence<key>& sequence, int n) {
+  for (int i = delta; i < n; ++i) {
+    key aux = sequence[i];
+    int j = i;
+    while (j >= delta && aux < sequence[j - delta]) {
+      sequence.data(j, sequence[j - delta]);
+      j -= delta;
+    }
+    sequence.data(j, aux);
+  }
+}
 
 
 // template <class key>

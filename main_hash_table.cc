@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
       metodo_ordenacion = new HeapSort<Nif>(*sequencia_a_ordenar, options.size);
       break;
     case 3:
-      // metodo_ordenacion = new ShellSort<Nif>();
+      metodo_ordenacion = new ShellSort<Nif>(*sequencia_a_ordenar, options.size);
       break;
     case 4:
       // metodo_ordenacion = new RadixSort<Nif>();

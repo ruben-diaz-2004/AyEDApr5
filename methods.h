@@ -57,7 +57,7 @@ class HeapSort : public SortMethod<key> {
  public:
   HeapSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
   void Sort() override {
-    HeapSort(sequence_, size_);
+    HeapSortFunction(sequence_, size_);
   }
   void Print() const {
     sequence_.Print();
@@ -72,11 +72,13 @@ class HeapSort : public SortMethod<key> {
 template <class key>
 class ShellSort : public SortMethod<key> {
  public:
-  ShellSort(StaticSequence<key> sequence, int size) : sequence_(sequence), size_(size) {}
-  void Sort() const override {
-    ShellSort(sequence_, size_);
+  ShellSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  void Sort() override {
+    ShellSortFunction(sequence_, size_);
   }
-
+  void Print() const {
+    sequence_.Print();
+  }
  private:
   StaticSequence<key> sequence_;
   int size_;
@@ -88,7 +90,7 @@ class RadixSort : public SortMethod<key> {
  public:
   RadixSort(StaticSequence<key> sequence, int size) : sequence_(sequence), size_(size) {}
   void Sort() const override {
-    RadixSort(sequence_, size_);
+    RadixSortFunction(sequence_, size_);
   }
 
  private:
