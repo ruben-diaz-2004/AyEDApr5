@@ -19,8 +19,8 @@ struct parameters {
   int size;
   int sort_code;
   int init_code;
-  bool print_trace = false;
   std::string file_name;
+  bool trace = true;
 };
 
 parameters parse_args(int argc, char* argv[]) {
@@ -53,8 +53,8 @@ parameters parse_args(int argc, char* argv[]) {
         options.file_name = *it;
       }
     } else if (*it == "-trace") {
-      if (*++it == "y") {
-        options.print_trace = true;
+      if (*++it == "n") {
+        options.trace = false;
       }
     }
     else {

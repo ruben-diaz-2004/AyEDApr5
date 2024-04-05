@@ -22,9 +22,9 @@
 template <class key>
 class SelectionSort : public SortMethod<key> {
  public:
-  SelectionSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  SelectionSort(StaticSequence<key>& sequence, const int& size, const bool& trace) : sequence_(sequence), size_(size), trace_(trace) {}
   void Sort() override {
-    SelectionSortFunction(sequence_, size_);
+    SelectionSortFunction(sequence_, size_, trace_);
   }
   void Print() const {
     sequence_.Print();
@@ -32,15 +32,16 @@ class SelectionSort : public SortMethod<key> {
  private:
   StaticSequence<key> sequence_;
   int size_;
+  bool trace_;
 };
 
 
 template <class key>
 class QuickSort : public SortMethod<key> {
  public:
-  QuickSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  QuickSort(StaticSequence<key>& sequence, const int& size, const bool& trace) : sequence_(sequence), size_(size), trace_(trace) {}
   void Sort() override {
-    QuickSortFunction(sequence_, 0, size_-1);
+    QuickSortFunction(sequence_, 0, size_-1, trace_);
   }
   void Print() const {
     sequence_.Print();
@@ -49,15 +50,16 @@ class QuickSort : public SortMethod<key> {
  private:
   StaticSequence<key> sequence_;
   int size_;
+  bool trace_;
 };
 
 
 template <class key>
 class HeapSort : public SortMethod<key> {
  public:
-  HeapSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  HeapSort(StaticSequence<key>& sequence, const int& size, const bool& trace) : sequence_(sequence), size_(size), trace_(trace) {}
   void Sort() override {
-    HeapSortFunction(sequence_, size_);
+    HeapSortFunction(sequence_, size_, trace_);
   }
   void Print() const {
     sequence_.Print();
@@ -66,15 +68,16 @@ class HeapSort : public SortMethod<key> {
  private:
   StaticSequence<key> sequence_;
   int size_;
+  bool trace_;
 };
 
 
 template <class key>
 class ShellSort : public SortMethod<key> {
  public:
-  ShellSort(StaticSequence<key>& sequence, const int& size) : sequence_(sequence), size_(size) {}
+  ShellSort(StaticSequence<key>& sequence, const int& size, const bool& trace) : sequence_(sequence), size_(size), trace_(trace) {}
   void Sort() override {
-    ShellSortFunction(sequence_, size_);
+    ShellSortFunction(sequence_, size_, trace_);
   }
   void Print() const {
     sequence_.Print();
@@ -82,20 +85,25 @@ class ShellSort : public SortMethod<key> {
  private:
   StaticSequence<key> sequence_;
   int size_;
+  bool trace_;
 };
 
 
 template <class key>
 class RadixSort : public SortMethod<key> {
  public:
-  RadixSort(StaticSequence<key> sequence, int size) : sequence_(sequence), size_(size) {}
-  void Sort() const override {
+  RadixSort(StaticSequence<key>& sequence, const int& size, const bool& trace) : sequence_(sequence), size_(size), trace_(trace) {}
+  void Sort() override {
     RadixSortFunction(sequence_, size_);
+  }
+  void Print() const {
+    sequence_.Print();
   }
 
  private:
   StaticSequence<key> sequence_;
   int size_;
+  bool trace_;
 };
 
 

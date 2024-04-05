@@ -26,7 +26,7 @@ void Swap(StaticSequence<key>& sequence, int i, int j) {
 }
 
 template <class key>
-void SelectionSortFunction(StaticSequence<key>& sequence, int size) {
+void SelectionSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
   for (int i{0}; i < size - 1; ++i) {
     int min_index{i};
     for (int j{i + 1}; j < size; ++j) {
@@ -38,13 +38,13 @@ void SelectionSortFunction(StaticSequence<key>& sequence, int size) {
     // sequence.data(min_index, sequence[i]);
     // sequence.data(i, aux);
     Swap(sequence, min_index, i);
-    sequence.Print();
+    if (trace) sequence.Print();
   }
 }
 
 
 template <class key>
-void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin) {
+void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin, bool trace) {
   int i{ini};
   int f{fin};
   key pivot = sequence[(i + f) / 2];
@@ -63,13 +63,13 @@ void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin) {
       ++i;
       --f;
     }
-    sequence.Print();
+    if (trace) sequence.Print();
   }
   if (ini < f) {
-    QuickSortFunction(sequence, ini, f);
+    QuickSortFunction(sequence, ini, f, trace);
   }
   if (i < fin) {
-    QuickSortFunction(sequence, i, fin);
+    QuickSortFunction(sequence, i, fin, trace);
   }
 
 
@@ -91,9 +91,6 @@ void baja(int i, StaticSequence<key>& Sequence, int n) {
     if (Sequence[h] <= Sequence[i]) {
       break;
     } else {
-      // key aux = Sequence[i];
-      // Sequence.data(i, Sequence[h]);
-      // Sequence.data(h, aux);
       Swap(Sequence, i, h);
       i = h;
     }
@@ -102,14 +99,11 @@ void baja(int i, StaticSequence<key>& Sequence, int n) {
 
 
 template <class key>
-void HeapSortFunction(StaticSequence<key>& sequence, int n) {
-  for (int i = n/2; i >= 0; --i) {
+void HeapSortFunction(StaticSequence<key>& sequence, int n, bool trace) {
+  for (int i = n/2; i > 0; --i) {
     baja(i, sequence, n);
   }
-  for (int i = n; i >= 2; --i) {
-    // key aux = sequence[1];
-    // sequence.data(1, sequence[i]);
-    // sequence.data(i, aux);
+  for (int i = n; i > 1; --i) {
     Swap(sequence, 1, i);
     baja(1, sequence, i-1);
   }
@@ -117,12 +111,12 @@ void HeapSortFunction(StaticSequence<key>& sequence, int n) {
 
 
 template <class key>
-void ShellSortFunction(StaticSequence<key>& sequence, int size) {
+void ShellSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
   int delta = size;
   while (delta > 1) {
     delta = delta / 2;
     DeltaSort(delta, sequence, size);
-    sequence.Print();
+    if (trace) sequence.Print();
   }
 }
 
@@ -140,10 +134,39 @@ void DeltaSort(int delta, StaticSequence<key>& sequence, int n) {
 }
 
 
-// template <class key>
-// void RadixSortFunction(StaticSequence<key> sequence, int size) {
-//   // Implementación de la función de ordenación
-// }
+template <class key>
+void RadixSortFunction(StaticSequence<key>& sequence, int size) {
+  int max{99999999};
+  for (int exp{1}; max/exp > 0; exp *= 10) {
+    CountSort(sequence, size, exp);
+    sequence.Print();
+  }
+}
+
+
+template <class key>
+void CountSort(StaticSequence<key>& sequence, int size, int exp) {
+  key output[size];
+  int count[10] = {0};
+
+  // Count the number of times each digit appears
+  for (int i{0}; i < size; ++i) {
+    ++count[(sequence[i] / exp) % 10];
+  }
+  // Cambiar count[i] para que ahora contenga la posición real de este dígito en output
+  for (int i{1}; i < 10; ++i) {
+    count[i] += count[i - 1];
+  }
+  // Construir el array de salida
+  for (int i{size - 1}; i >= 0; --i) {
+    output[--count[(sequence[i] / exp) % 10]] = sequence[i];
+  }
+  // Copiar al vector de salida a sequence
+  for (int i{0}; i < size; ++i) {
+    // sequence[i] = output[i];
+    sequence.data(i, output[i]);
+  }
+}
 
 
 

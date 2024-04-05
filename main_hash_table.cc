@@ -48,19 +48,19 @@ int main(int argc, char *argv[]) {
   SortMethod<Nif>* metodo_ordenacion;
   switch (options.sort_code) {
     case 0:
-      metodo_ordenacion = new SelectionSort<Nif>(*sequencia_a_ordenar, options.size);
+      metodo_ordenacion = new SelectionSort<Nif>(*sequencia_a_ordenar, options.size, options.trace);
       break;
     case 1:
-      metodo_ordenacion = new QuickSort<Nif>(*sequencia_a_ordenar, options.size);
+      metodo_ordenacion = new QuickSort<Nif>(*sequencia_a_ordenar, options.size, options.trace);
       break;
     case 2:
-      metodo_ordenacion = new HeapSort<Nif>(*sequencia_a_ordenar, options.size);
+      metodo_ordenacion = new HeapSort<Nif>(*sequencia_a_ordenar, options.size, options.trace);
       break;
     case 3:
-      metodo_ordenacion = new ShellSort<Nif>(*sequencia_a_ordenar, options.size);
+      metodo_ordenacion = new ShellSort<Nif>(*sequencia_a_ordenar, options.size, options.trace);
       break;
     case 4:
-      // metodo_ordenacion = new RadixSort<Nif>();
+      metodo_ordenacion = new RadixSort<Nif>(*sequencia_a_ordenar, options.size, options.trace);
       break;
   }
 
