@@ -78,15 +78,13 @@ void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin, bool tra
 template <class key>
 void baja(int i, StaticSequence<key>& Sequence, int n) {
   int h1, h2, h;
-  while (2*i <= n) {
-    h1 = 2*i;
+  while (2*i + 1 <= n) {
+    h1 = 2*i + 1;
     h2 = h1 + 1;
-    if (h1 == n) {
-      h = h1;
-    } else if (Sequence[h1] > Sequence[h2]) {
-      h = h1;
-    } else {
+    if (h2 < n && Sequence[h1] < Sequence[h2]) {      
       h = h2;
+    } else{
+      h = h1;
     }
     if (Sequence[h] <= Sequence[i]) {
       break;
@@ -100,12 +98,12 @@ void baja(int i, StaticSequence<key>& Sequence, int n) {
 
 template <class key>
 void HeapSortFunction(StaticSequence<key>& sequence, int n, bool trace) {
-  for (int i = n/2; i > 0; --i) {
-    baja(i, sequence, n);
+  for (int i = n/2 - 1; i >= 0; --i) {
+    baja(i, sequence, n - 1);
   }
-  for (int i = n; i > 1; --i) {
-    Swap(sequence, 1, i);
-    baja(1, sequence, i-1);
+  for (int i = n - 1; i > 0; --i) {
+    Swap(sequence, 0, i);
+    baja(0, sequence, i-1);
   }
 }
 
