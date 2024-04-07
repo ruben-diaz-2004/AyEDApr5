@@ -94,7 +94,7 @@ class RadixSort : public SortMethod<key> {
  public:
   RadixSort(StaticSequence<key>& sequence, const int& size, const bool& trace) : sequence_(sequence), size_(size), trace_(trace) {}
   void Sort() override {
-    RadixSortFunction(sequence_, size_);
+    RadixSortFunction(sequence_, size_, trace_);
   }
   void Print() const {
     sequence_.Print();

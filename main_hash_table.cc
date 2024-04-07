@@ -27,9 +27,6 @@
 int main(int argc, char *argv[]) {
   parameters options = parse_args(argc, argv);
 
-  std::cout << "Options menu:" << std::endl << "'i' to insert key.\n'r' to insert random key\n's' to search key.\n'x' to exit.\n";
-
-
   StaticSequence<Nif>* sequencia_a_ordenar;
   switch (options.init_code) {
     case 0:
@@ -64,24 +61,27 @@ int main(int argc, char *argv[]) {
       break;
   }
 
+  std::cout << "Antes de ordenar" << std::endl << std::endl;
   metodo_ordenacion->Print();
+  std::cout << "Llamando al metodo de ordenacion" << std::endl;
   metodo_ordenacion->Sort();
+  std::cout << "Despues de ordenar" << std::endl;
   metodo_ordenacion->Print();
 
-  bool running = true;
-  char stop;
-  long clave;
-  while(running) {
-    std::cin >> stop;
-    switch(stop) {
-      case 'x':
-        running = false;
-        break;
-      default:
-        running = false;
-        break;
-    }
-  }
+  // bool running = true;
+  // char stop;
+  // long clave;
+  // while(running) {
+  //   std::cin >> stop;
+  //   switch(stop) {
+  //     case 'x':
+  //       running = false;
+  //       break;
+  //     default:
+  //       running = false;
+  //       break;
+  //   }
+  // }
 
   return 0;
 }

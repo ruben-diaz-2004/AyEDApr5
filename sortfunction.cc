@@ -63,7 +63,6 @@ void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin, bool tra
       ++i;
       --f;
     }
-    if (trace) sequence.Print();
   }
   if (ini < f) {
     QuickSortFunction(sequence, ini, f, trace);
@@ -71,8 +70,7 @@ void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin, bool tra
   if (i < fin) {
     QuickSortFunction(sequence, i, fin, trace);
   }
-
-
+  if (trace) sequence.Print();
 }
 
 template <class key>
@@ -81,10 +79,10 @@ void baja(int i, StaticSequence<key>& Sequence, int n) {
   while (2*i + 1 <= n) {
     h1 = 2*i + 1;
     h2 = h1 + 1;
-    if (h2 < n && Sequence[h1] < Sequence[h2]) {      
-      h = h2;
-    } else{
+    if (h1 == n || Sequence[h1] > Sequence[h2]) {
       h = h1;
+    } else {
+      h = h2;
     }
     if (Sequence[h] <= Sequence[i]) {
       break;
@@ -104,15 +102,23 @@ void HeapSortFunction(StaticSequence<key>& sequence, int n, bool trace) {
   for (int i = n - 1; i > 0; --i) {
     Swap(sequence, 0, i);
     baja(0, sequence, i-1);
+    if (trace) sequence.Print();
   }
 }
 
 
 template <class key>
 void ShellSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
-  int delta = size;
+  double alpha;
+  std::cout << "Introduce el valor de alpha (0 < alpha < 1): ";
+  std::cin >> alpha;
+  if (alpha <= 0 || alpha >= 1) {
+    std::cerr << "Error: alpha debe ser un valor entre 0 y 1" << std::endl;
+    exit(1);
+  }
+  int delta = size * alpha;
   while (delta > 1) {
-    delta = delta / 2;
+    delta = delta * alpha;
     DeltaSort(delta, sequence, size);
     if (trace) sequence.Print();
   }
@@ -133,11 +139,11 @@ void DeltaSort(int delta, StaticSequence<key>& sequence, int n) {
 
 
 template <class key>
-void RadixSortFunction(StaticSequence<key>& sequence, int size) {
+void RadixSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
   int max{99999999};
   for (int exp{1}; max/exp > 0; exp *= 10) {
     CountSort(sequence, size, exp);
-    sequence.Print();
+    if (trace) sequence.Print();
   }
 }
 
