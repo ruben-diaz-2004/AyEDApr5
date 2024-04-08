@@ -16,8 +16,12 @@
 #include "staticsequence.h"
 
 
-// Plantilla de función de ordenación SortFunction<key> (staticsequence<key>, size)
-
+/**
+ * @brief Función que intercambia dos elementos de un vector
+ * @param sequence Vector de elementos
+ * @param i Índice del primer elemento
+ * @param j Índice del segundo elemento
+*/
 template <class key>
 void Swap(StaticSequence<key>& sequence, int i, int j) {
   key aux = sequence[i];
@@ -25,6 +29,13 @@ void Swap(StaticSequence<key>& sequence, int i, int j) {
   sequence.data(j, aux);
 }
 
+
+/**
+ * @brief Función que implementa el algoritmo de ordenación por selección
+ * @param sequence Vector de elementos
+ * @param size Tamaño del vector
+ * @param trace Indica si se debe mostrar el vector en cada paso
+*/
 template <class key>
 void SelectionSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
   for (int i{0}; i < size - 1; ++i) {
@@ -43,6 +54,14 @@ void SelectionSortFunction(StaticSequence<key>& sequence, int size, bool trace) 
 }
 
 
+
+/**
+ * @brief Función que implementa el algoritmo de ordenación quick sort
+ * @param sequence Vector de elementos
+ * @param ini Índice del primer elemento
+ * @param fin Índice del último elemento
+ * @param trace Indica si se debe mostrar el vector en cada paso
+*/
 template <class key>
 void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin, bool trace) {
   int i{ini};
@@ -73,6 +92,13 @@ void QuickSortFunction(StaticSequence<key>& sequence, int ini, int fin, bool tra
   if (trace) sequence.Print();
 }
 
+
+
+/**
+ * @brief Función auxiliar para el algoritmo de ordenación heap sort
+ * @param sequence Vector de elementos
+ * @param n Tamaño del vector
+*/
 template <class key>
 void baja(int i, StaticSequence<key>& Sequence, int n) {
   int h1, h2, h;
@@ -94,6 +120,12 @@ void baja(int i, StaticSequence<key>& Sequence, int n) {
 }
 
 
+/**
+ * @brief Función que implementa el algoritmo de ordenación heap sort
+ * @param sequence Vector de elementos
+ * @param n Tamaño del vector
+ * @param trace Indica si se debe mostrar el vector en cada paso
+*/
 template <class key>
 void HeapSortFunction(StaticSequence<key>& sequence, int n, bool trace) {
   for (int i = n/2 - 1; i >= 0; --i) {
@@ -107,6 +139,13 @@ void HeapSortFunction(StaticSequence<key>& sequence, int n, bool trace) {
 }
 
 
+
+/**
+ * @brief Función que implementa el algoritmo de ordenación shell sort
+ * @param sequence Vector de elementos
+ * @param size Tamaño del vector
+ * @param trace Indica si se debe mostrar el vector en cada paso
+*/
 template <class key>
 void ShellSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
   double alpha;
@@ -124,6 +163,14 @@ void ShellSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
   }
 }
 
+
+
+/**
+ * @brief Función auxiliar para el algoritmo de ordenación shell sort
+ * @param delta Distancia entre los elementos a comparar
+ * @param sequence Vector de elementos
+ * @param n Tamaño del vector
+*/
 template <class key>
 void DeltaSort(int delta, StaticSequence<key>& sequence, int n) {
   for (int i = delta; i < n; ++i) {
@@ -138,9 +185,22 @@ void DeltaSort(int delta, StaticSequence<key>& sequence, int n) {
 }
 
 
+
+/**
+ * @brief Función que implementa el algoritmo de ordenación radix sort
+ * @param sequence Vector de elementos
+ * @param size Tamaño del vector
+ * @param trace Indica si se debe mostrar el vector en cada paso
+*/
 template <class key>
 void RadixSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
-  int max{99999999};
+  long max;
+  max = sequence[0];
+  for (int i{1}; i < size; ++i) {
+    if (long(sequence[i]) > max) {
+      max = long(sequence[i]);
+    }
+  }
   for (int exp{1}; max/exp > 0; exp *= 10) {
     CountSort(sequence, size, exp);
     if (trace) sequence.Print();
@@ -148,6 +208,13 @@ void RadixSortFunction(StaticSequence<key>& sequence, int size, bool trace) {
 }
 
 
+
+/**
+ * @brief Función auxiliar para el algoritmo de ordenación radix sort
+ * @param sequence Vector de elementos
+ * @param size Tamaño del vector
+ * @param exp Exponente
+*/
 template <class key>
 void CountSort(StaticSequence<key>& sequence, int size, int exp) {
   key output[size];

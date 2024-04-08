@@ -19,6 +19,9 @@
 
 
 
+/**
+ * Clase que implementea el método de ordenación selection sort
+*/
 template <class key>
 class SelectionSort : public SortMethod<key> {
  public:
@@ -36,6 +39,10 @@ class SelectionSort : public SortMethod<key> {
 };
 
 
+
+/**
+ * Clase que implementea el método de ordenación quick sort
+*/
 template <class key>
 class QuickSort : public SortMethod<key> {
  public:
@@ -54,6 +61,10 @@ class QuickSort : public SortMethod<key> {
 };
 
 
+
+/**
+ * Clase que implementea el método de ordenación heap sort
+*/
 template <class key>
 class HeapSort : public SortMethod<key> {
  public:
@@ -72,6 +83,10 @@ class HeapSort : public SortMethod<key> {
 };
 
 
+
+/**
+ * Clase que implementea el método de ordenación shell sort
+*/
 template <class key>
 class ShellSort : public SortMethod<key> {
  public:
@@ -89,6 +104,10 @@ class ShellSort : public SortMethod<key> {
 };
 
 
+
+/**
+ * Clase que implementea el método de ordenación radix sort
+*/
 template <class key>
 class RadixSort : public SortMethod<key> {
  public:
